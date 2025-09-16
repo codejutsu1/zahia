@@ -4,6 +4,7 @@ namespace App\Services\Product;
 
 use App\Models\Product;
 use App\Services\Product\Data\CreateProductData;
+use App\Services\Product\Data\UpdateProductData;
 
 class ProductService
 {
@@ -20,7 +21,7 @@ class ProductService
         return Product::create($data->toArray());
     }
 
-    public function updateProduct(Product $product, CreateProductData $data): Product
+    public function updateProduct(Product $product, UpdateProductData $data): Product
     {
         $product->update($data->toArray());
 
