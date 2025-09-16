@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\VendorStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,14 @@ class VendorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'email' => $this->faker->email(),
+            'phone' => $this->faker->phoneNumber(),
+            'address' => $this->faker->address(),
+            'website' => $this->faker->url(),
+            'description' => $this->faker->sentence(),
+            'status' => VendorStatus::ACTIVE,
+            'user_id' => User::first()->id,
         ];
     }
 }

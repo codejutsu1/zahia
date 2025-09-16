@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Vendor::class);
 
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('price');
             $table->string('status');
             $table->string('quantity');

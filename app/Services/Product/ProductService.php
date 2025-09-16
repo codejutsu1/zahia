@@ -15,8 +15,20 @@ class ProductService
         //
     }
 
-    public function createProduct(CreateProductData $data)
+    public function createProduct(CreateProductData $data): Product
     {
         return Product::create($data->toArray());
+    }
+
+    public function updateProduct(Product $product, CreateProductData $data): Product
+    {
+        $product->update($data->toArray());
+
+        return $product;
+    }
+
+    public function deleteProduct(Product $product): void
+    {
+        $product->delete();
     }
 }

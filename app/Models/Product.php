@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\ProductStatus;
 use App\Enums\ProductType;
+use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,8 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
+    use HasUuidColumn;
+
     protected $fillable = [
         'name',
         'description',
@@ -20,6 +23,8 @@ class Product extends Model
         'status',
         'vendor_id',
         'quantity',
+        'type',
+        'is_addon',
     ];
 
     protected function casts(): array
