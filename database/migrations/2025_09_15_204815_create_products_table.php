@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProductStatus;
 use App\Models\Vendor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -21,8 +22,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('price');
-            $table->string('status');
-            $table->string('quantity');
+            $table->string('status')->default(ProductStatus::ACTIVE);
+            $table->string('quantity')->nullable();
 
             $table->boolean('is_addon')->default(false);
             $table->string('type');

@@ -2,21 +2,21 @@
 
 namespace App\Services\Cart;
 
-use App\Models\Cart;
+use App\Services\Cart\Actions\CreateCartAction;
 use App\Services\Cart\Data\CreateCartData;
+use Illuminate\Support\Collection;
 
 class CartService
 {
     /**
      * Create a new class instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        protected CreateCartAction $createCartAction,
+    ) {}
 
-    public function createCart(CreateCartData $data): Cart
+    public function createCart(CreateCartData $data): Collection
     {
-        return Cart::create($data->toArray());
+        return $this->createCartAction->execute($data);
     }
 }

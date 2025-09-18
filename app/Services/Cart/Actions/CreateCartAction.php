@@ -7,45 +7,59 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Services\Cart\Data\CreateCartData;
 use App\Services\Cart\Data\CreateCartItemData;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class CreateCartAction
 {
-    public function execute(CreateCartData $data): Cart
+    /** @return Collection<Cart> */
+    public function execute(CreateCartData $data): Collection
     {
-        $cart = $this->createCart($data);
+        $carts = $this->createCart($data);
 
-        $this->createCartItems($cart, $data);
+        $this->createCartItems($carts, $data);
 
-        return $cart;
+        return $carts;
     }
 
-    protected function createCart(CreateCartData $data): Cart
+    /** @return Collection<Cart> */
+    protected function createCart(CreateCartData $data): Collection
     {
-        $cart = Cart::where([
-            'vendor_id' => $data->vendor_id,
-            'status' => CartStatus::ACTIVE,
-        ]);
+        $carts = collect();
 
-        if ($cart->exists()) {
-            return $cart->first();
-        }
+        $vendorIds = $data->cartItems
+            ->map(fn (CreateCartItemData $i) => $i->product->vendor_id)
+            ->unique();
 
-        return Cart::create([
-            'vendor_id' => $data->vendor_id,
-            'user_id' => $data->user_id,
-            'status' => $data->status,
-        ]);
+        $vendorIds->each(function ($vendorId) use (&$carts, $data) {
+            $cart = Cart::firstOrCreate([
+                'user_id' => $data->user_id,
+                'vendor_id' => $vendorId,
+                'status' => CartStatus::ACTIVE,
+            ]);
+
+            $carts->push($cart);
+        });
+
+        return $carts;
     }
 
-    protected function createCartItems(Cart $cart, CreateCartData $data): void
+    protected function createCartItems(Collection $carts, CreateCartData $data): void
     {
-        $cartItemData = $data->cartItems->map(function (CreateCartItemData $item) use ($cart) {
+        $now = now();
+
+        $cartItemData = $data->cartItems->map(function (CreateCartItemData $item) use ($carts, $now) {
+            $cart = $carts->firstWhere('vendor_id', $item->product->vendor_id);
+
             return [
+                'uuid' => Str::uuid(),
                 'cart_id' => $cart->id,
-                'product_id' => $item->product_id,
+                'product_id' => $item->product->id,
                 'quantity' => $item->quantity,
-                'is_addon' => $item->isAddon,
+                'is_addon' => (bool) $item->isAddon,
                 'status' => $item->status,
+                'created_at' => $now,
+                'updated_at' => $now,
             ];
         })->toArray();
 
