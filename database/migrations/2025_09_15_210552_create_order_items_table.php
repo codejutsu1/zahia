@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class);
 
             $table->integer('quantity');
+            $table->integer('price');
             $table->string('status');
 
             $table->timestamps();
