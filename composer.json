@@ -15,7 +15,8 @@
         "prism-php/prism": "^0.89.0",
         "saloonphp/laravel-plugin": "^3.6",
         "saloonphp/saloon": "^3.14",
-        "spatie/laravel-data": "^4.17"
+        "spatie/laravel-data": "^4.17",
+        "spatie/laravel-webhook-client": "^3.4"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
