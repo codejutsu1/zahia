@@ -16,7 +16,8 @@
         "saloonphp/laravel-plugin": "^3.6",
         "saloonphp/saloon": "^3.14",
         "spatie/laravel-data": "^4.17",
-        "spatie/laravel-webhook-client": "^3.4"
+        "spatie/laravel-webhook-client": "^3.4",
+        "twilio/sdk": "^8.6"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
