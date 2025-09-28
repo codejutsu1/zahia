@@ -123,4 +123,10 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'services' => [
+        'llm' => [
+            'driver' => env('LLM_DRIVER', 'gemini'),
+        ],
+    ],
+
 ];
