@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignIdFor(Vendor::class)->nullable();
             $table->foreignIdFor(Conversation::class);
 
-            $table->string('message_sid');
+            $table->string('message_sid')->nullable();
             $table->text('message');
             $table->string('direction')->nullable();
             $table->string('phone')->nullable();
