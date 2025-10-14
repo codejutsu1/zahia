@@ -41,7 +41,13 @@ class ListProductsTool
                             });
                         })
                         ->when($price, function ($query) use ($price) {
-                            $query->where('price', $price);
+                            if (preg_match('/^(<=?|>=?)(\d+(?:\.\d+)?)$/', trim($price), $matches)) {
+                                $operator = $matches[1];
+                                $value = (float) $matches[2];
+                                $query->where('price', $operator, $value);
+                            } else {
+                                $query->where('price', $price);
+                            }
                         })
                         ->where('status', ProductStatus::ACTIVE)
                         ->get();
@@ -53,13 +59,11 @@ class ListProductsTool
 
                         foreach ($vendorProducts as $product) {
                             /** @phpstan-ignore-next-line */
-                            $message .= "📦 {$product->name} - 💰 $".number_format($product->price, 2)."\n";
+                            $message .= "📦 {$product->name} - 💰 ₦".number_format($product->price, 2)."\n";
                         }
 
                         $message .= "\n";
                     });
-
-                    // Log::info('Application - ' + $message);
 
                     return $message;
                 } catch (\Exception $e) {
