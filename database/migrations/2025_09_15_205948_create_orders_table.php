@@ -24,6 +24,10 @@ return new class extends Migration
 
             $table->string('status');
 
+            $table->string('account_name')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('bank_name')->nullable();
+
             $table->timestamps();
         });
     }

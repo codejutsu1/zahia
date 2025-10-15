@@ -7,8 +7,11 @@ use App\Models\Cart;
 use App\Models\User;
 use App\Services\Order\Data\CreateOrderData;
 use App\Services\Order\OrderService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Prism\Prism\Schema\ArraySchema;
+use Prism\Prism\Schema\ObjectSchema;
 use Prism\Prism\Schema\StringSchema;
 use Prism\Prism\Tool;
 
@@ -24,6 +27,18 @@ class CreateOrderTool
                 'The cart parameters',
                 [
                     new StringSchema('vendor_name', 'The vendor name that belongs to the cart'),
+                    new ArraySchema(
+                        name: 'products',
+                        description: 'The selected products that the user wants to add to the order',
+                        items: new ObjectSchema(
+                            name: 'product',
+                            description: 'A product entry',
+                            properties: [
+                                new StringSchema('name', 'The product name'),
+                            ],
+                            requiredFields: ['name']
+                        )
+                    ),
                 ],
                 requiredFields: [
                     'vendor_name',
@@ -32,25 +47,47 @@ class CreateOrderTool
             ->using(function (array $cart) use ($user) {
                 try {
                     $vendorName = $cart['vendor_name'];
+                    $productNames = collect($cart['products'])->pluck('name')->toArray();
+                    $productNames = array_map('ucwords', $productNames);
 
-                    $cart = Cart::with('items.product.vendor')
+                    Log::info(['order' => $productNames]);
+
+                    $productNames = array_values(array_filter((array) $productNames));
+
+                    $cart = Cart::with([
+                        'items' => function ($q) use ($productNames) {
+                            $q->whereHas('product', fn (Builder $q2) => $q2->whereIn('name', $productNames))
+                                ->with('product.vendor');
+                        },
+                    ])
                         ->where('user_id', $user->id)
                         ->whereHas('vendor', function ($query) use ($vendorName) {
                             $query->where('name', $vendorName);
                         })
                         ->first();
 
-                    DB::transaction(function () use ($cart, $user) {
+                    Log::info($cart->items->pluck('id'));
+
+                    $order = DB::transaction(function () use ($cart, $user) {
                         $createOrderData = CreateOrderData::from([
                             'user' => $user,
                             'cart' => $cart,
                             'status' => OrderStatus::PENDING,
+                            'cartItemIds' => $cart->items->pluck('id'),
                         ]);
 
-                        app(OrderService::class)->createOrder($createOrderData);
+                        return app(OrderService::class)->createOrder($createOrderData);
                     });
 
-                    return 'Order created successfully';
+                    $message = "*✅ Order Created Successfully*\n\n"
+                        ."*Total Amount: ₦* $order->total_amount\n\n"
+                        ."*Pay to*\n"
+                        ."Account number: $order->account_number\n"
+                        ."Account Name: $order->account_name\n"
+                        ."Bank Name: $order->bank_name\n\n"
+                        .'Thank you for your purchase!';
+
+                    return $message;
                 } catch (\Exception $e) {
                     Log::error('Error creating order: '.$e->getMessage());
 

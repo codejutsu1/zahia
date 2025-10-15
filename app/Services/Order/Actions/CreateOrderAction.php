@@ -2,11 +2,14 @@
 
 namespace App\Services\Order\Actions;
 
+use App\Enums\CartStatus;
 use App\Enums\OrderItemStatus;
+use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\Order\Data\CreateOrderData;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreateOrderAction
@@ -15,11 +18,15 @@ class CreateOrderAction
     {
         $this->validateData($data);
 
-        $totalAmount = $this->getTotalAmount($data);
+        $cart = $this->checkForSelectedCartItems($data);
 
-        $order = $this->createOrder($data, $totalAmount);
+        $totalAmount = $this->getTotalAmount($cart, $data);
 
-        $this->createOrderItems($order, $data);
+        $order = $this->createOrder($cart, $data, $totalAmount);
+
+        $this->createOrderItems($cart, $order, $data);
+
+        $this->initializeTransaction($order, $totalAmount);
 
         return $order;
     }
@@ -31,28 +38,51 @@ class CreateOrderAction
         }
     }
 
-    protected function getTotalAmount(CreateOrderData $data): int
+    protected function checkForSelectedCartItems(CreateOrderData $data): Cart
     {
-        $data->cart->load('items');
+        Log::info($data->cartItemIds);
+        if ($data->cartItemIds->isEmpty()) {
+            return $data->cart;
+        }
 
-        /* @phpstan-ignore-next-line */
-        return $data->cart->items->sum(fn (CartItem $cartItem) => $cartItem->product->price * $cartItem->quantity);
+        $cart = Cart::create([
+            'user_id' => $data->user->id,
+            'vendor_id' => $data->cart->vendor_id,
+            'status' => CartStatus::ACTIVE,
+        ]);
+
+        CartItem::whereIn('id', $data->cartItemIds)->update([
+            'cart_id' => $cart->id,
+        ]);
+
+        return $cart;
     }
 
-    protected function createOrder(CreateOrderData $data, int $totalAmount): Order
+    protected function getTotalAmount(Cart $cart, CreateOrderData $data): int
     {
+        $cart->load('items');
+
+        /* @phpstan-ignore-next-line */
+        return $cart->items->sum(fn (CartItem $cartItem) => $cartItem->product->price * $cartItem->quantity);
+    }
+
+    protected function createOrder(
+        Cart $cart,
+        CreateOrderData $data,
+        int $totalAmount
+    ): Order {
         return Order::create([
             'user_id' => $data->user->id,
-            'cart_id' => $data->cart->id,
+            'cart_id' => $cart->id,
             'total_amount' => $totalAmount,
             'status' => $data->status,
         ]);
     }
 
-    protected function createOrderItems(Order $order, CreateOrderData $data): void
+    protected function createOrderItems(Cart $cart, Order $order, CreateOrderData $data): void
     {
-        $data->cart->load('items');
-        $cartItem = $data->cart->items;
+        $cart->load('items');
+        $cartItem = $cart->items;
 
         /* @phpstan-ignore-next-line */
         $orderItemData = $cartItem->map(function (CartItem $cartItem) use ($order) {
@@ -68,5 +98,16 @@ class CreateOrderAction
         })->toArray();
 
         OrderItem::insert($orderItemData);
+    }
+
+    protected function initializeTransaction(Order $order, int $totalAmount): void
+    {
+        $amount = $totalAmount;
+
+        $order->update([
+            'account_name' => 'Test Account',
+            'account_number' => '1234567890',
+            'bank_name' => 'Test Bank',
+        ]);
     }
 }

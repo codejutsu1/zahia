@@ -22,6 +22,9 @@ class Order extends Model
         'cart_id',
         'total_amount',
         'status',
+        'account_name',
+        'account_number',
+        'bank_name',
     ];
 
     protected function casts(): array
