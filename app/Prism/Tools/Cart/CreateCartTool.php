@@ -99,8 +99,6 @@ class CreateCartTool
                             'cartItems' => $cartItemData,
                         ]);
 
-                        Log::info(['cartData' => $cartData->toArray()]);
-
                         app(CartService::class)->createCart($cartData);
 
                         return 'success';

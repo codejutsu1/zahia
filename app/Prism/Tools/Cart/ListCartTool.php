@@ -58,7 +58,7 @@ class ListCartTool
 
                             $vendorTotal += $total;
 
-                            $message .= "📦 {$product->name} x{$quantity} - 💰 ₦".number_format($total, 2)."\n";
+                            $message .= "📦 {$product->name} (₦".number_format($product->price, 2)." x{$item->quantity}) - 💰 ₦".number_format($total, 2)."\n";
                         }
 
                         $overallTotal += $vendorTotal;
