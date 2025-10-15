@@ -4,6 +4,7 @@ namespace App\Services\Llm\Driver;
 
 use App\Contracts\InteractWithLlm;
 use App\Models\User;
+use App\Prism\Tools\Cart\CreateCartTool;
 use App\Prism\Tools\Product\ListProductsTool;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Prism;
@@ -21,6 +22,7 @@ class GeminiDriver implements InteractWithLlm
             ->using(Provider::Gemini, 'gemini-2.5-flash')
             ->withTools([
                 ListProductsTool::make($user),
+                CreateCartTool::make($user),
             ])
             ->withMaxSteps(2)
             ->withMessages($prismMessages)
