@@ -6,6 +6,7 @@ use App\Contracts\InteractWithLlm;
 use App\Models\User;
 use App\Prism\Tools\Cart\CreateCartTool;
 use App\Prism\Tools\Cart\ListCartTool;
+use App\Prism\Tools\Order\CheckoutOrderTool;
 use App\Prism\Tools\Product\ListProductsTool;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Prism;
@@ -25,6 +26,7 @@ class GeminiDriver implements InteractWithLlm
                 ListProductsTool::make($user),
                 CreateCartTool::make($user),
                 ListCartTool::make($user),
+                CheckoutOrderTool::make($user),
             ])
             ->withMaxSteps(2)
             ->withMessages($prismMessages)
