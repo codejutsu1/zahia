@@ -4,9 +4,10 @@ namespace App\Prism\Tools\Cart;
 
 use App\Models\Cart;
 use App\Models\User;
+use Prism\Prism\Tool;
+use App\Enums\CartStatus;
 use Illuminate\Support\Facades\Log;
 use Prism\Prism\Schema\StringSchema;
-use Prism\Prism\Tool;
 
 class ListCartTool
 {
@@ -30,6 +31,7 @@ class ListCartTool
 
                     $carts = Cart::with('items.product.vendor')
                         ->where('user_id', $user->id)
+                        ->active()
                         ->when($vendorName, function ($query) use ($vendorName) {
                             $query->whereHas('items.product.vendor', function ($q) use ($vendorName) {
                                 $q->where('name', $vendorName);

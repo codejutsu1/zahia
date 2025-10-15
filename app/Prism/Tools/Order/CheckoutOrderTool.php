@@ -57,6 +57,7 @@ class CheckoutOrderTool
                         },
                     ])
                         ->where('user_id', $user->id)
+                        ->active()
                         ->whereHas('vendor', function ($query) use ($vendorName) {
                             $query->where('name', $vendorName);
                         })

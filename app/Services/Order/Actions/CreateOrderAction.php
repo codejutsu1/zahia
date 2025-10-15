@@ -98,6 +98,10 @@ class CreateOrderAction
         })->toArray();
 
         OrderItem::insert($orderItemData);
+
+        $cart->update([
+            'status' => CartStatus::COMPLETED,
+        ]);
     }
 
     protected function initializeTransaction(Order $order, int $totalAmount): void
