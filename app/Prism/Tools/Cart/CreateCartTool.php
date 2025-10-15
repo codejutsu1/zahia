@@ -54,8 +54,6 @@ class CreateCartTool
             )
             ->using(function (array $cart) use ($user) {
                 try {
-                    Log::info(['cart' => $cart]);
-
                     $message = DB::transaction(function () use ($user, $cart) {
                         $items = collect($cart['cart_items']);
 
@@ -67,7 +65,7 @@ class CreateCartTool
                         $products = Product::with('vendor')
                             ->whereIn('vendor_id', $vendors->pluck('id'))
                             ->get()
-                                        /** @phpstan-ignore-next-line */
+                            /** @phpstan-ignore-next-line */
                             ->groupBy(fn ($p) => $p->vendor->name);
 
                         $cartItemData = collect();
@@ -83,8 +81,6 @@ class CreateCartTool
                             }
 
                             $product = $products[$vendorName]->firstWhere('name', $productName) ?? null;
-
-                            Log::info(['product' => $product]);
 
                             if (! $product) {
                                 return "$vendorName doesnt have this $productName, try another product?";
