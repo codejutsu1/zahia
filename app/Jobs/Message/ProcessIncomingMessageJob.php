@@ -7,7 +7,6 @@ use App\Enums\MessageDirection;
 use App\Enums\MessageParticipant;
 use App\Enums\MessageProvider;
 use App\Enums\MessageStatus;
-use App\Facade\Chatbot;
 use App\Facade\Llm;
 use App\Models\Message;
 use App\Models\User;

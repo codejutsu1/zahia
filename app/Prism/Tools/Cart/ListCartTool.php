@@ -4,10 +4,9 @@ namespace App\Prism\Tools\Cart;
 
 use App\Models\Cart;
 use App\Models\User;
-use Prism\Prism\Tool;
-use App\Enums\CartStatus;
 use Illuminate\Support\Facades\Log;
 use Prism\Prism\Schema\StringSchema;
+use Prism\Prism\Tool;
 
 class ListCartTool
 {

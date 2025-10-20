@@ -19,4 +19,11 @@ class OrderService
     {
         return $this->createOrderAction->execute($data);
     }
+
+    public function notifyVendor(Order $order): void
+    {
+        // $vendor = $order->cart->vendor;
+
+        // $vendor->notify(new OrderCreated($order));
+    }
 }
