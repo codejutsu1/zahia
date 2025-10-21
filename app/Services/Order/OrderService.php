@@ -26,4 +26,19 @@ class OrderService
 
         // $vendor->notify(new OrderCreated($order));
     }
+
+    public function repeatOrder(Order $order): void
+    {
+        //
+    }
+
+    public function scheduleOrder(Order $order): void
+    {
+        //
+    }
+
+    public function cancelOrder(Order $order): void
+    {
+        //
+    }
 }
