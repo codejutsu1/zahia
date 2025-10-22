@@ -4,6 +4,7 @@ namespace App\Services\Order\Actions;
 
 use App\Enums\CartStatus;
 use App\Enums\OrderItemStatus;
+use App\Jobs\Order\NotifyVendor;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
@@ -27,6 +28,8 @@ class CreateOrderAction
         $this->createOrderItems($cart, $order, $data);
 
         $this->initializeTransaction($order, $totalAmount);
+
+        $this->notifyVendor($order);
 
         return $order;
     }
@@ -113,5 +116,10 @@ class CreateOrderAction
             'account_number' => '1234567890',
             'bank_name' => 'Test Bank',
         ]);
+    }
+
+    protected function notifyVendor(Order $order): void
+    {
+        NotifyVendor::dispatch($order->id);
     }
 }

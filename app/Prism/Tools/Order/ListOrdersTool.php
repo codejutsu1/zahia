@@ -14,7 +14,7 @@ class ListOrdersTool
     {
         return (new Tool)
             ->as('list_orders')
-            ->for('List all orders of a user. The user doesn\'t need to pass any parameters, it will return all orders of the user.')
+            ->for('List all orders of a user. The user doesn\'t need to pass any parameters, it will return all orders of the user. After listing the order, ask if I want to repeat the order, if the user says yes, call the repeat order tool.')
             ->withObjectParameter(
                 'orders',
                 'The orders parameters',
@@ -31,8 +31,6 @@ class ListOrdersTool
                         ->withCount('items')
                         ->whereBelongsTo($user)
                         ->get();
-
-                    Log::info('Orders: '.json_encode($orders));
 
                     $orders->each(function ($order) use (&$message) {
                         /** @phpstan-ignore-next-line  */
