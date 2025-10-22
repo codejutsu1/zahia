@@ -8,6 +8,7 @@ use App\Prism\Tools\Cart\CreateCartTool;
 use App\Prism\Tools\Cart\ListCartTool;
 use App\Prism\Tools\Order\CheckoutOrderTool;
 use App\Prism\Tools\Order\CreateOrderTool;
+use App\Prism\Tools\Order\ListOrdersTool;
 use App\Prism\Tools\Product\ListProductsTool;
 use Prism\Prism\Enums\Provider;
 use Prism\Prism\Prism;
@@ -24,6 +25,7 @@ class GeminiDriver implements InteractWithLlm
         return Prism::text()
             ->using(Provider::Gemini, 'gemini-2.5-flash')
             ->withTools([
+                ListOrdersTool::make($user),
                 ListProductsTool::make($user),
                 CreateCartTool::make($user),
                 ListCartTool::make($user),

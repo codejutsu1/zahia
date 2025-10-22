@@ -50,8 +50,6 @@ class CreateOrderTool
                     $productNames = collect($cart['products'])->pluck('name')->toArray();
                     $productNames = array_map('ucwords', $productNames);
 
-                    Log::info(['order' => $productNames]);
-
                     $productNames = array_values(array_filter((array) $productNames));
 
                     $cart = Cart::with([
@@ -66,8 +64,6 @@ class CreateOrderTool
                             $query->where('name', $vendorName);
                         })
                         ->first();
-
-                    Log::info($cart->items->pluck('id'));
 
                     $order = DB::transaction(function () use ($cart, $user) {
                         $createOrderData = CreateOrderData::from([

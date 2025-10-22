@@ -46,8 +46,6 @@ class CheckoutOrderTool
                     $productNames = collect($cart['products'])->pluck('name')->toArray();
                     $productNames = array_map('ucwords', $productNames);
 
-                    Log::info(['checkout' => $productNames]);
-
                     $message = '';
 
                     $cart = Cart::with([
@@ -62,8 +60,6 @@ class CheckoutOrderTool
                             $query->where('name', $vendorName);
                         })
                         ->first();
-
-                    Log::info($cart->items->pluck('id'));
 
                     $overallTotal = 0;
                     $deliveryFee = random_int(1, 4) * 400;
