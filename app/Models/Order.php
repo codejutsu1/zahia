@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Traits\HasOrderIdColumn;
 use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,12 +15,14 @@ class Order extends Model
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory;
 
+    use HasOrderIdColumn;
     use HasUuidColumn;
 
     protected $fillable = [
         'uuid',
         'user_id',
         'cart_id',
+        'order_id',
         'total_amount',
         'status',
         'account_name',

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Cart::class);
 
+            $table->string('order_id')->unique();
+
             $table->string('total_amount');
 
             $table->string('status');
