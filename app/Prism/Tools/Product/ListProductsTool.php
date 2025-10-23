@@ -15,7 +15,7 @@ class ListProductsTool
     {
         return (new Tool)
             ->as('list_products')
-            ->for('List all products with a name and can be filtered by vendor name and/or price')
+            ->for('List all products with a name and can be filtered by vendor name and/or price. Please list the products with the emoji and not in a single line.')
             ->withObjectParameter(
                 'product',
                 'The product parameters',
