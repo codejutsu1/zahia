@@ -7,6 +7,7 @@ use App\Enums\MessageDirection;
 use App\Enums\MessageParticipant;
 use App\Enums\MessageProvider;
 use App\Enums\MessageStatus;
+use App\Facade\Chatbot;
 use App\Facade\Llm;
 use App\Models\Message;
 use App\Models\User;
@@ -72,7 +73,7 @@ class ProcessIncomingMessageJob implements ShouldQueue
             'is_processed' => true,
         ]);
 
-        // return Chatbot::sendMessage($responseText);
+        // Chatbot::sendMessage($responseText);
         Log::info($responseText);
     }
 }
