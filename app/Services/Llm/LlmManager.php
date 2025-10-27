@@ -9,7 +9,7 @@ use Illuminate\Support\Manager;
 
 class LlmManager extends Manager
 {
-    public function getDefaultDriver()
+    public function getDefaultDriver(): string
     {
         return config('app.services.llm.driver', 'gemini');
     }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,7 +18,15 @@ class Transaction extends Model
         'amount',
         'currency',
         'reference',
+        'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => TransactionStatus::class,
+        ];
+    }
 
     public function order(): BelongsTo
     {
