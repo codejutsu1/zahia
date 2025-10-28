@@ -21,7 +21,7 @@ class CreateOrderTool
     {
         return (new Tool)
             ->as('create_order')
-            ->for('Creating an order, this tool creates an order, after the user confirms he or she wants to create an order, call the create order tool with the vendor name.')
+            ->for('Creating an order, this tool creates an order, after the user confirms he or she wants to create an order, call the create order tool with the vendor name. If the user gets an error saying invalid email, ask the user to provide a valid email address and call the update email tool.')
             ->withObjectParameter(
                 'cart',
                 'The cart parameters',
@@ -57,6 +57,7 @@ class CreateOrderTool
                             $q->whereHas('product', fn (Builder $q2) => $q2->whereIn('name', $productNames))
                                 ->with('product.vendor');
                         },
+                        'user',
                     ])
                         ->where('user_id', $user->id)
                         ->active()
@@ -64,6 +65,11 @@ class CreateOrderTool
                             $query->where('name', $vendorName);
                         })
                         ->first();
+
+                    /** @phpstan-ignore-next-line */
+                    if (is_null($cart->user->email)) {
+                        return 'You don\'t have an email address, please provide a valid email address and call the update email tool.';
+                    }
 
                     $order = DB::transaction(function () use ($cart, $user) {
                         $createOrderData = CreateOrderData::from([

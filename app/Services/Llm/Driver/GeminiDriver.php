@@ -11,6 +11,7 @@ use App\Prism\Tools\Order\CreateOrderTool;
 use App\Prism\Tools\Order\ListOrdersTool;
 use App\Prism\Tools\Order\RepeatOrderTool;
 use App\Prism\Tools\Product\ListProductsTool;
+use App\Prism\Tools\Profile\UpdateEmailTool;
 use App\Prism\Tools\Vendor\Product\CreateProductTool;
 use App\Prism\Tools\Vendor\Product\DeleteProductTool;
 use App\Prism\Tools\Vendor\Product\ListProductsTool as VendorListProductsTool;
@@ -38,6 +39,7 @@ class GeminiDriver implements InteractWithLlm
                 CheckoutOrderTool::make($user),
                 CreateOrderTool::make($user),
                 RepeatOrderTool::make($user),
+                UpdateEmailTool::make($user),
             ])
             ->withMaxSteps(2)
             ->withMessages($prismMessages)

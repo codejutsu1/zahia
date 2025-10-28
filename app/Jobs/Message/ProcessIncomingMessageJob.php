@@ -54,8 +54,8 @@ class ProcessIncomingMessageJob implements ShouldQueue
                 : new AssistantMessage($message->message);
         })->all();
 
-        // $responseText = Llm::prompt($prismMessages, $user);
-        $responseText = Llm::vendorPrompt($prismMessages, $user);
+        $responseText = Llm::prompt($prismMessages, $user);
+        // $responseText = Llm::vendorPrompt($prismMessages, $user);
 
         /** @phpstan-ignore-next-line */
         $conversation->messages()->create([
