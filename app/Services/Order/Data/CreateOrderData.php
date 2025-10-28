@@ -16,7 +16,9 @@ class CreateOrderData extends Data
     public function __construct(
         public readonly User $user,
         public readonly Cart $cart,
+        public ?Collection $cartItemIds = null,
         public readonly OrderStatus $status = OrderStatus::PENDING,
-        public readonly ?Collection $cartItemIds = new Collection,
-    ) {}
+    ) {
+        $this->cartItemIds ??= collect();
+    }
 }

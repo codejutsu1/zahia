@@ -4,13 +4,18 @@ namespace App\Services\Order\Actions;
 
 use App\Enums\CartStatus;
 use App\Enums\OrderItemStatus;
+use App\Enums\TransactionPaymentProvider;
+use App\Enums\TransactionStatus;
+use App\Exceptions\OrderException;
+use App\Facade\Transaction as TransactionFacade;
 use App\Jobs\Order\NotifyVendor;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Services\Order\Data\CreateOrderData;
-use Illuminate\Support\Facades\Log;
+use App\Services\Transaction\Data\PaymentData;
+use App\Services\Transaction\Data\TransactionResponse;
 use Illuminate\Support\Str;
 
 class CreateOrderAction
@@ -27,7 +32,7 @@ class CreateOrderAction
 
         $this->createOrderItems($cart, $order, $data);
 
-        $this->initializeTransaction($order, $totalAmount);
+        $this->initializeTransaction($order);
 
         $this->notifyVendor($order);
 
@@ -43,7 +48,6 @@ class CreateOrderAction
 
     protected function checkForSelectedCartItems(CreateOrderData $data): Cart
     {
-        Log::info($data->cartItemIds);
         if ($data->cartItemIds->isEmpty()) {
             return $data->cart;
         }
@@ -107,14 +111,51 @@ class CreateOrderAction
         ]);
     }
 
-    protected function initializeTransaction(Order $order, int $totalAmount): void
+    protected function initializeTransaction(Order $order): void
     {
-        $amount = $totalAmount;
+        /**@phpstan-ignore-next-line */
+        if (is_null($order->user->email)) {
+            throw OrderException::nullableEmail();
+        }
+
+        $reference = Str::uuid();
+
+        $provider = TransactionPaymentProvider::from(config('services.payment_provider'));
+
+        $payload = PaymentData::from([
+            'reference' => $reference,
+            'email' => $order->user->email,
+            'amount' => $order->total_amount,
+            'currency' => 'NGN',
+            'redirect_url' => 'https://lol.com',
+            'payment_method' => 'bank_transfer',
+            'meta' => [
+                /* @phpstan-ignore-next-line */
+                'order_uid' => $order->uuid->toString(),
+            ],
+        ]);
+
+        $response = TransactionFacade::driver($provider->value)
+            ->initiateTransaction($payload);
 
         $order->update([
-            'account_name' => 'Test Account',
-            'account_number' => '1234567890',
-            'bank_name' => 'Test Bank',
+            'account_name' => $response->account_name ?? 'Zahia Limited',
+            'account_number' => $response->account_number,
+            'bank_name' => $response->bank_name,
+        ]);
+
+        $this->createTransaction($order, $response);
+    }
+
+    protected function createTransaction(Order $order, TransactionResponse $response): void
+    {
+        $order->transaction()->create([
+            'amount' => $response->amount,
+            'currency' => 'NGN',
+            'reference' => $response->reference,
+            'payment_method' => 'bank_transfer',
+            'payment_status' => TransactionStatus::Pending,
+            'status' => TransactionStatus::Pending,
         ]);
     }
 

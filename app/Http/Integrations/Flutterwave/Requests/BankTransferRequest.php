@@ -6,14 +6,12 @@ use App\Services\Transaction\Data\PaymentData;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Http\Request;
-use Saloon\Traits\Body\HasFormBody;
 use Saloon\Traits\Body\HasJsonBody;
 use Saloon\Traits\Plugins\AcceptsJson;
 
 class BankTransferRequest extends Request implements HasBody
 {
     use AcceptsJson;
-    use HasFormBody;
     use HasJsonBody;
 
     public function __construct(protected PaymentData $data) {}

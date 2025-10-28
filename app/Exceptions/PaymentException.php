@@ -2,9 +2,7 @@
 
 namespace App\Exceptions;
 
-use Exception;
-
-class PaymentException extends Exception
+class PaymentException extends CustomException
 {
     //
 }

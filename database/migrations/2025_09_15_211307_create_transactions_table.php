@@ -23,8 +23,8 @@ return new class extends Migration
             $table->string('reference');
             $table->string('payment_method');
             $table->string('payment_status');
-            $table->string('payment_id');
-            $table->string('payment_url');
+            $table->string('payment_id')->nullable();
+            $table->string('payment_url')->nullable();
             $table->string('status');
 
             $table->timestamps();

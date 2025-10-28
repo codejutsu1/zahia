@@ -11,6 +11,7 @@ use App\Http\Integrations\Flutterwave\Requests\VerifyTransactionRequest;
 use App\Services\Transaction\Data\PaymentData;
 use App\Services\Transaction\Data\TransactionData;
 use App\Services\Transaction\Data\TransactionResponse;
+use Illuminate\Support\Facades\Log;
 
 class FlutterwaveDriver implements InteractWithTransaction
 {
@@ -36,11 +37,13 @@ class FlutterwaveDriver implements InteractWithTransaction
         $response = $this->connector->send($request);
 
         if ($response->failed()) {
-            // throw new PaymentException(
-            //     message: 'Failed to initiate transaction.',
-            //     provider: TransactionPaymentProvider::Flutterwave->value,
-            //     response_data: $response->json()
-            // );
+            Log::info(json_encode($response->json()));
+
+            throw new PaymentException(
+                message: 'Failed to initiate transaction.',
+                provider: TransactionPaymentProvider::Flutterwave->value,
+                response_data: $response->json()
+            );
         }
 
         $responseData = $response->json();

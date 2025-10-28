@@ -12,5 +12,6 @@ class TransactionResponse extends Data
         public readonly string $expires_at,
         public readonly string $reference,
         public readonly string $amount,
+        public readonly ?string $account_name = null,
     ) {}
 }
