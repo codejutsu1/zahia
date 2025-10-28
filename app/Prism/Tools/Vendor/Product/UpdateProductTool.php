@@ -57,7 +57,7 @@ class UpdateProductTool
                     }
 
                     $product['vendor_id'] = $vendor->id;
-                    $product['id'] = $product['id'];
+                    $product['id'] = $productModel->id;
                     $updateProductData = UpdateProductData::from($product);
 
                     DB::transaction(function () use ($productModel, $updateProductData) {

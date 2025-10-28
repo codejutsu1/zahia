@@ -16,7 +16,7 @@ class DeleteProductTool
     public static function make(User $user): Tool
     {
         return (new Tool)
-            ->as('update_product')
+            ->as('delete_product')
             ->for('Deletes a product, always ask for confirmation before the deleting the product. Make sure the user is aware its an irreversible action.')
             ->withObjectParameter(
                 'product',

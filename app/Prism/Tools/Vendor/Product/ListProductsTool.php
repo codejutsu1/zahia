@@ -28,12 +28,34 @@ class ListProductsTool
                         ->where('status', ProductStatus::ACTIVE)
                         ->get();
 
+                    if ($products->isEmpty()) {
+                        return 'You do not have any active products yet.';
+                    }
+
                     $message = '';
 
-                    $products->each(function ($product) use (&$message) {
-                        /** @phpstan-ignore-next-line */
-                        $message .= "📦 {$product->name} - 💰 ₦".number_format($product->price, 2)."\n";
-                    });
+                    $message = $products
+                        ->map(function ($product, $index) {
+                            /** @phpstan-ignore-next-line */
+                            $status = ucwords($product->status->value);
+                            /** @phpstan-ignore-next-line */
+                            $type = ucwords($product->type->value);
+
+                            $name = $product->name;
+                            /** @phpstan-ignore-next-line */
+                            $price = '₦'.number_format($product->price, 2);
+                            $quantity = $product->quantity ?? 'N/A';
+
+                            return '🔢 Product #'.
+                                ($index + 1).
+                                "
+                                📦 Name: {$name}
+                                💰 Price: {$price}
+                                🔢 Qty: {$quantity}
+                                ✅ Status: {$status}
+                                🏷️ Type: {$type}";
+                        })
+                        ->implode("\n\n-----------------------\n\n");
 
                     return $message;
                 } catch (\Exception $e) {

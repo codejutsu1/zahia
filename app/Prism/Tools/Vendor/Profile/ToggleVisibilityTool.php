@@ -14,7 +14,7 @@ class ToggleVisibilityTool
     public static function make(User $user): Tool
     {
         return (new Tool)
-            ->as('update_product')
+            ->as('toggle_visibility')
             ->for('Toggles the visibility of the vendor profile, this tool toggles the visibility of the vendor profile, after the user confirms he or she wants to toggle the visibility of the vendor profile.')
             ->withObjectParameter(
                 'vendor',

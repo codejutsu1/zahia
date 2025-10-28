@@ -21,7 +21,7 @@ class CreateProductTool
     {
         return (new Tool)
             ->as('create_product')
-            ->for('Creates a product, this tool creates a product, after the user confirms he or she wants to create a product.')
+            ->for('Creates a product, this tool creates a product, after the user confirms he or she wants to create a product, please specify the type options.')
             ->withObjectParameter(
                 'product',
                 'The product parameters',
@@ -35,7 +35,6 @@ class CreateProductTool
                 ],
                 requiredFields: [
                     'name',
-                    'description',
                     'type',
                     'price',
                 ]

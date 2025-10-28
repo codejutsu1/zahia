@@ -23,7 +23,11 @@ class ProductService
 
     public function updateProduct(Product $product, UpdateProductData $data): Product
     {
-        $product->update($data->toArray());
+        $attributes = collect($data->toArray())
+            ->reject(fn ($value) => is_null($value))
+            ->toArray();
+
+        $product->update($attributes);
 
         return $product;
     }
