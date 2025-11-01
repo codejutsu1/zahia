@@ -24,7 +24,8 @@ return new class extends Migration
             $table->foreignIdFor(Conversation::class);
 
             $table->string('message_sid')->nullable();
-            $table->text('message');
+            $table->string('path')->nullable();
+            $table->text('message')->nullable();
             $table->string('direction')->nullable();
             $table->string('phone')->nullable();
             $table->string('profile_name')->nullable();

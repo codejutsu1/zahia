@@ -23,6 +23,7 @@ class Message extends Model
         'uuid',
         'user_id',
         'vendor_id',
+        'path',
         'conversation_id',
         'message_sid',
         'message',

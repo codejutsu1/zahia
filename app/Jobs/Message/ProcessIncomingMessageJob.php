@@ -24,7 +24,7 @@ class ProcessIncomingMessageJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Message $message)
+    public function __construct(public int $messageId)
     {
         //
     }
@@ -34,9 +34,17 @@ class ProcessIncomingMessageJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $conversation = $this->message->conversation;
+        $message = Message::find($this->messageId);
 
-        $user = User::find($this->message->user_id);
+        if (! $message) {
+            Log::info('Message not found');
+
+            return;
+        }
+
+        $conversation = $message->conversation;
+
+        $user = User::find($message->user_id);
 
         if (! $user) {
             // return Chatbot::sendMessage('You do not exist in our system, please contact your branch manager to be added to the system.');
@@ -59,7 +67,7 @@ class ProcessIncomingMessageJob implements ShouldQueue
 
         /** @phpstan-ignore-next-line */
         $conversation->messages()->create([
-            'user_id' => $this->message->user_id,
+            'user_id' => $message->user_id,
             'message' => $responseText,
             'status' => MessageStatus::Received,
             'direction' => MessageDirection::INCOMING,
@@ -70,7 +78,7 @@ class ProcessIncomingMessageJob implements ShouldQueue
             'is_processed' => true,
         ]);
 
-        $this->message->update([
+        $message->update([
             'is_processed' => true,
         ]);
 

@@ -60,7 +60,7 @@ class ProcessTwilioWebhookJob extends ProcessWebhookJob
                 'timestamp' => now(),
             ]);
 
-            ProcessIncomingMessageJob::dispatch($message);
+            ProcessIncomingMessageJob::dispatch($message->id);
         } catch (\Throwable $th) {
             report($th);
             throw $th;
