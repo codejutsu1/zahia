@@ -12,6 +12,7 @@ use App\Models\Conversation;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Foundation\Queue\Queueable;
+use Illuminate\Support\Facades\Log;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 
 class ProcessTwilioWebhookJob extends ProcessWebhookJob
@@ -24,6 +25,8 @@ class ProcessTwilioWebhookJob extends ProcessWebhookJob
     public function handle(): void
     {
         $payload = $this->webhookCall->payload;
+
+        Log::info(['payload' => $payload]);
 
         try {
             $waPhone = '+'.data_get($payload, 'WaId');

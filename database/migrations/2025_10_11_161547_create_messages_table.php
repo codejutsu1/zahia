@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->uuid('uuid');
 
-            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(User::class)->nullable();
             $table->foreignIdFor(Vendor::class)->nullable();
             $table->foreignIdFor(Conversation::class);
 

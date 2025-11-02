@@ -26,9 +26,9 @@ class TwilioSignatureValidator implements SignatureValidator
 
         $validator = new RequestValidator($secret);
 
-        // $url = 'https://6ttrhjqzsl.sharedwithexpose.com/webhooks/incoming-message';
+        $url = 'https://kpjrcrw5jy.sharedwithexpose.com/webhooks/incoming-message';
 
-        $url = $request->fullUrl();
+        // $url = $request->fullUrl();
 
         $requestData = $request->post();
 
