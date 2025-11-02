@@ -32,6 +32,8 @@ return new class extends Migration
             $table->string('channel');
             $table->string('provider');
             $table->string('participant');
+            $table->string('type')->nullable();
+            $table->string('media_url')->nullable();
             $table->string('status');
 
             $table->boolean('is_processed')->default(false);

@@ -53,4 +53,9 @@ return [
         'secret_hash' => env('FLW_SECRET_HASH'),
     ],
 
+    'ffmpeg' => [
+        // 'path' => env('FFMPEG_PATH', '/usr/bin/ffmpeg'),
+        'path' => env('FFMPEG_PATH', 'C:\\ffmpeg\\bin\\ffmpeg.exe'),
+    ],
+
 ];

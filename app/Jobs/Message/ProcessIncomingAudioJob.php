@@ -33,6 +33,8 @@ class ProcessIncomingAudioJob implements ShouldQueue
         if (! $user) {
             // return Chatbot::sendMessage('You do not exist in our system, please contact your branch manager to be added to the system.');
             Log::info('You do not exist in our system, please contact your branch manager to be added to the system.');
+
+            return;
         }
 
         $responseText = Llm::driver('openai')->audio($message->path);

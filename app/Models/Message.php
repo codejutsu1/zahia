@@ -7,6 +7,7 @@ use App\Enums\MessageDirection;
 use App\Enums\MessageParticipant;
 use App\Enums\MessageProvider;
 use App\Enums\MessageStatus;
+use App\Enums\MessageType;
 use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +34,8 @@ class Message extends Model
         'channel',
         'provider',
         'participant',
+        'type',
+        'media_url',
         'status',
         'is_processed',
         'timestamp',
@@ -46,6 +49,7 @@ class Message extends Model
             'status' => MessageStatus::class,
             'direction' => MessageDirection::class,
             'participant' => MessageParticipant::class,
+            'type' => MessageType::class,
         ];
     }
 
