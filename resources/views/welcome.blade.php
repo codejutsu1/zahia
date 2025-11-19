@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,9 +26,9 @@
                     <h1 class="text-lg font-bold">Zahia</h1>
                 </div>
                 <nav>
-                    <button class="bg-[#7C6DC0] text-white px-4 py-2 rounded-md">
+                    <a href="#waitlist" class="bg-[#7C6DC0] text-white px-4 py-2 rounded-md">
                         Join Waitlist
-                    </button>
+                    </a>
                 </nav>
             </div>
         </header>
@@ -59,30 +59,30 @@
                 <div class="container mx-auto px-4 md:px-6">
                     <div class="text-center">
                         <h2 class="text-3xl md:text-4xl font-bold">All The Ways You Can Order</h2>
-                        <p class="mt-4 max-w-2xl mx-auto text-muted-foreground">
+                        <p class="mt-4 max-w-2xl mx-auto text-gray-600">
                             We designed Zahia to be as flexible as your customers.
                         </p>
                     </div>
                     <div class="mt-12 grid gap-8 md:grid-cols-3">
-                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow bg-white rounded-lg p-6">
-                            <div class="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-text-icon lucide-message-square-text"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="M7 11h10"/><path d="M7 15h6"/><path d="M7 7h8"/></svg>
+                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow bg-white rounded-lg p-6 space-y-2">
+                            <div class="mx-auto bg-[#7C6DC0]/10 p-4 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square-text-icon lucide-message-square-text"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/><path d="M7 11h10"/><path d="M7 15h6"/><path d="M7 7h8"/></svg>
                             </div>
-                            <p class="pt-4">Order by Text</p>
+                            <p class="pt-4 font-bold text-xl">Order by Text</p>
                             <p class="text-gray-600">Type out your order just like you're talking to a friend. Complex or simple, we get it.</p>
                         </div>
-                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow">
-                            <div class="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic-icon lucide-mic"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg>
+                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow bg-white rounded-lg p-6 space-y-2">
+                            <div class="mx-auto bg-[#7C6DC0]/10 p-4 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mic-icon lucide-mic"><path d="M12 19v3"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><rect x="9" y="2" width="6" height="13" rx="3"/></svg>
                             </div>
-                            <p class="pt-4">Order by Voice</p>
+                            <p class="pt-4 font-bold text-xl">Order by Voice</p>
                             <p class="text-gray-600">On the go? Just send a voice note with your order details. We'll transcribe and process it automatically.</p>
                         </div>
-                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow">
-                            <div class="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                        <div class="h-full text-center shadow-lg hover:shadow-xl transition-shadow bg-white rounded-lg p-6 space-y-2">
+                            <div class="mx-auto bg-[#7C6DC0]/10 p-4 rounded-full w-fit">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-image-icon lucide-image"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                             </div>
-                            <p class="pt-4">Order by Image</p>
+                            <p class="pt-4 font-bold text-xl">Order by Image</p>
                             <p class="text-gray-600">Saw something you want? Snap a picture of a product or a menu and we'll figure out your order for you.</p>
                         </div>
                         
@@ -101,26 +101,26 @@
                     <div class="relative">
                     <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-1/2"></div>
                     <div class="grid gap-12 md:grid-cols-3 relative">
-                        <div class="text-center space-y-4 bg-background p-6">
-                            <div class="mx-auto w-fit p-4 rounded-full bg-primary/10 border-4 border-background">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone-icon lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                        <div class="text-center space-y-4 p-6">
+                            <div class="mx-auto w-fit p-4 rounded-full bg-[#7C6DC0]/10 border-4 border-[#F0F0F4]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-smartphone-icon lucide-smartphone"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
                             </div>
                             <h3 class="text-xl font-semibold">Send Your Order</h3>
-                            <p class="text-muted-foreground">Use WhatsApp to send your order via text, voice, or even an image. Whatever is easiest for you.</p>
+                            <p class="text-gray-600">Use WhatsApp to send your order via text, voice, or even an image. Whatever is easiest for you.</p>
                         </div>
                         <div class="text-center space-y-4 bg-background p-6">
-                            <div class="mx-auto w-fit p-4 rounded-full bg-primary/10 border-4 border-background">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit-icon lucide-brain-circuit"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M12 13h4"/><path d="M12 18h6a2 2 0 0 1 2 2v1"/><path d="M12 8h8"/><path d="M16 8V5a2 2 0 0 1 2-2"/><circle cx="16" cy="13" r=".5"/><circle cx="18" cy="3" r=".5"/><circle cx="20" cy="21" r=".5"/><circle cx="20" cy="8" r=".5"/></svg>
+                            <div class="mx-auto w-fit p-4 rounded-full bg-[#7C6DC0]/10 border-4 border-[#F0F0F4]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-circuit-icon lucide-brain-circuit"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M12 13h4"/><path d="M12 18h6a2 2 0 0 1 2 2v1"/><path d="M12 8h8"/><path d="M16 8V5a2 2 0 0 1 2-2"/><circle cx="16" cy="13" r=".5"/><circle cx="18" cy="3" r=".5"/><circle cx="20" cy="21" r=".5"/><circle cx="20" cy="8" r=".5"/></svg>
                             </div>
                             <h3 class="text-xl font-semibold">AI Does The Magic</h3>
-                            <p class="text-muted-foreground">Our intelligent system instantly understands what you want, how many you need, and any special requests.</p>
+                            <p class="text-gray-600">Our intelligent system instantly understands what you want, how many you need, and any special requests.</p>
                         </div>
-                        <div class="text-center space-y-4 bg-background p-6">
-                            <div class="mx-auto w-fit p-4 rounded-full bg-primary/10 border-4 border-background">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <div class="text-center space-y-4 p-6">
+                            <div class="mx-auto w-fit p-4 rounded-full bg-[#7C6DC0]/10 border-4 border-[#F0F0F4]">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="size-10" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-check-icon lucide-badge-check"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg>
                             </div>
                             <h3 class="text-xl font-semibold">Order Processed</h3>
-                            <p class="text-muted-foreground">Your order is confirmed and sent for processing in seconds. It's that simple and lightning-fast.</p>
+                            <p class="text-gray-600">Your order is confirmed and sent for processing in seconds. It's that simple and lightning-fast.</p>
                         </div>
                     </div>
                 </div>
@@ -135,7 +135,7 @@
                         </p>
                         <form action="#" class="mt-8">
                         <div class="flex flex-col sm:flex-row items-center gap-4 max-w-md mx-auto">
-                            <input type="email" name="email" placeholder="Enter your email address" required class="flex-1 bg-background">
+                            <input type="email" name="email" placeholder="Enter your email address" required class="flex-1 bg-background bg-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#7C6DC0] focus:border-transparent">
                             </input>
                             <button type="submit" class="bg-[#7C6DC0] text-white px-4 py-2 rounded-md">
                                 Join the Waitlist
@@ -147,12 +147,35 @@
             </section>
         </main>
 
-        <footer class="py-6 border-t border-gray-200">
+        <footer class="py-6 border-t border-gray-200 bg-[#F0F0F4]">
+            <div class="flex items-center justify-center gap-4 mb-2">
+                <a href="#" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter-icon lucide-twitter"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
+                </a>
+                <a href="#" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="size-5" viewBox="0 0 24 24" fill="none" stroke="#7C6DC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail-icon lucide-mail"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+                </a>
+            </div>
             <div class="container mx-auto px-4 md:px-6">
                 <p class="text-center text-sm text-gray-600">
-                © 2025 Zahia. All rights reserved.
+                ©{{ date('Y') }} Zahia. All rights reserved. | <a href="#" class="text-[#7C6DC0]">Terms of Service</a> | <a href="#" class="text-[#7C6DC0]">Privacy Policy</a>
                 </p>
             </div>
         </footer>
     </body>
+
+    <script>
+        let isScrolled = false;
+
+        function handleScroll() {
+            isScrolled = window.scrollY > 10;
+            if (isScrolled) {
+                document.querySelector("header").classList.add("shadow-md");
+            } else {
+                document.querySelector("header").classList.remove("shadow-md");
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll);
+    </script>
 </html>
