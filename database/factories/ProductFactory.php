@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProductStatus;
+use App\Enums\ProductType;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,13 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'price' => fake()->randomFloat(2, 0, 10000),
+            'vendor_id' => Vendor::factory(),
+            'description' => fake()->sentence(),
+            'quantity' => fake()->numberBetween(1, 100),
+            'status' => ProductStatus::ACTIVE,
+            'type' => ProductType::FOOD,
         ];
     }
 }

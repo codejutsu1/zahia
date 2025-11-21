@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Enums\CartStatus;
+use App\Models\User;
+use App\Models\Vendor;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,9 @@ class CartFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => User::factory(),
+            'vendor_id' => Vendor::factory(),
+            'status' => CartStatus::ACTIVE,
         ];
     }
 }
