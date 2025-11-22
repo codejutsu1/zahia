@@ -92,6 +92,6 @@ jobs:
         DB_DATABASE: db_test_laravel
         DB_PORT: 33306
         DB_USER: root
-      run: php artisan test --parallel
+      run: vendor/bin/pest --parallel
 
 
