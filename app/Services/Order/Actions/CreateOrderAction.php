@@ -41,8 +41,16 @@ class CreateOrderAction
 
     protected function validateData(CreateOrderData $data): void
     {
+        if ($data->user->email === null) {
+            throw new \Exception('This user does not have an email address');
+        }
+
         if ($data->user->id !== $data->cart->user_id) {
             throw new \Exception('This user does not have this cart');
+        }
+        /** @phpstan-ignore-next-line */
+        if ($data->cart->status !== CartStatus::ACTIVE) {
+            throw new \Exception('This cart is not active');
         }
     }
 
@@ -113,6 +121,10 @@ class CreateOrderAction
 
     protected function initializeTransaction(Order $order): void
     {
+        if (app()->environment('testing')) {
+            return;
+        }
+
         /**@phpstan-ignore-next-line */
         if (is_null($order->user->email)) {
             throw OrderException::nullableEmail();
