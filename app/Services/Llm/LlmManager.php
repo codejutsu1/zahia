@@ -3,10 +3,16 @@
 namespace App\Services\Llm;
 
 use App\Contracts\InteractWithLlm;
+use App\Models\User;
 use App\Services\Llm\Driver\GeminiDriver;
 use App\Services\Llm\Driver\OpenAIDriver;
 use Illuminate\Support\Manager;
 
+/**
+ * @method string prompt(array $prismMessages, User $user)
+ *
+ * @mixin InteractWithLlm
+ */
 class LlmManager extends Manager
 {
     public function getDefaultDriver(): string

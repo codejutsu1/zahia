@@ -1,17 +1,17 @@
 <?php
 
 use App\Models\User;
-use Prism\Prism\Prism;
+use App\Prism\Tools\Order\ListOrdersTool;
 use App\Prism\Tools\Order\RepeatOrderTool;
-use Prism\Prism\Enums\Provider;
-use Prism\Prism\ValueObjects\Meta;
 use Prism\Prism\Enums\FinishReason;
-use Prism\Prism\ValueObjects\Usage;
+use Prism\Prism\Enums\Provider;
+use Prism\Prism\Prism;
 use Prism\Prism\Testing\TextStepFake;
 use Prism\Prism\Text\ResponseBuilder;
+use Prism\Prism\ValueObjects\Meta;
 use Prism\Prism\ValueObjects\ToolCall;
 use Prism\Prism\ValueObjects\ToolResult;
-use App\Prism\Tools\Order\ListOrdersTool;
+use Prism\Prism\ValueObjects\Usage;
 
 beforeEach(function () {
     $this->user = User::factory()->create(['email' => 'customer@example.com']);
@@ -99,7 +99,7 @@ it('lists orders then proceeds to repeat when user confirms', function () {
             ->addStep(
                 TextStepFake::make()
                     ->withToolCalls([
-                        new ToolCall(id: 'call_list', name: 'list_orders', arguments: ['orders' => ['order_id' => '']])
+                        new ToolCall(id: 'call_list', name: 'list_orders', arguments: ['orders' => ['order_id' => '']]),
                     ])
                     ->withFinishReason(FinishReason::ToolCalls)
                     ->withUsage(new Usage(20, 30))
@@ -109,7 +109,7 @@ it('lists orders then proceeds to repeat when user confirms', function () {
                 TextStepFake::make()
                     ->withText('Your orders are shown above. Would you like to repeat any?')
                     ->withToolResults([
-                        new ToolResult(toolCallId: 'call_list', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: $ordersResult)
+                        new ToolResult(toolCallId: 'call_list', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: $ordersResult),
                     ])
                     ->withFinishReason(FinishReason::Stop)
                     ->withUsage(new Usage(40, 50))
@@ -118,7 +118,7 @@ it('lists orders then proceeds to repeat when user confirms', function () {
             ->addStep(
                 TextStepFake::make()
                     ->withToolCalls([
-                        new ToolCall(id: 'call_repeat', name: 'repeat_order', arguments: ['order' => ['id' => 'ORD12345']])
+                        new ToolCall(id: 'call_repeat', name: 'repeat_order', arguments: ['order' => ['id' => 'ORD12345']]),
                     ])
                     ->withFinishReason(FinishReason::ToolCalls)
                     ->withUsage(new Usage(45, 55))
@@ -128,7 +128,7 @@ it('lists orders then proceeds to repeat when user confirms', function () {
                 TextStepFake::make()
                     ->withText('Your order has been repeated!')
                     ->withToolResults([
-                        new ToolResult(toolCallId: 'call_repeat', toolName: 'repeat_order', args: ['order' => ['id' => 'ORD12345']], result: $repeatResult)
+                        new ToolResult(toolCallId: 'call_repeat', toolName: 'repeat_order', args: ['order' => ['id' => 'ORD12345']], result: $repeatResult),
                     ])
                     ->withFinishReason(FinishReason::Stop)
                     ->withUsage(new Usage(55, 65))
@@ -162,7 +162,7 @@ it('handles empty orders list', function () {
             ->addStep(
                 TextStepFake::make()
                     ->withToolCalls([
-                        new ToolCall(id: 'call_empty', name: 'list_orders', arguments: ['orders' => ['order_id' => '']])
+                        new ToolCall(id: 'call_empty', name: 'list_orders', arguments: ['orders' => ['order_id' => '']]),
                     ])
                     ->withFinishReason(FinishReason::ToolCalls)
                     ->withUsage(new Usage(18, 28))
@@ -172,7 +172,7 @@ it('handles empty orders list', function () {
                 TextStepFake::make()
                     ->withText('You have no orders yet.')
                     ->withToolResults([
-                        new ToolResult(toolCallId: 'call_empty', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: $ordersResult)
+                        new ToolResult(toolCallId: 'call_empty', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: $ordersResult),
                     ])
                     ->withFinishReason(FinishReason::Stop)
                     ->withUsage(new Usage(30, 40))
@@ -201,7 +201,7 @@ it('handles list orders error', function () {
             ->addStep(
                 TextStepFake::make()
                     ->withToolCalls([
-                        new ToolCall(id: 'call_error', name: 'list_orders', arguments: ['orders' => ['order_id' => '']])
+                        new ToolCall(id: 'call_error', name: 'list_orders', arguments: ['orders' => ['order_id' => '']]),
                     ])
                     ->withFinishReason(FinishReason::ToolCalls)
                     ->withUsage(new Usage(18, 28))
@@ -211,7 +211,7 @@ it('handles list orders error', function () {
                 TextStepFake::make()
                     ->withText('I encountered an error retrieving your orders.')
                     ->withToolResults([
-                        new ToolResult(toolCallId: 'call_error', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: 'Error listing orders')
+                        new ToolResult(toolCallId: 'call_error', toolName: 'list_orders', args: ['orders' => ['order_id' => '']], result: 'Error listing orders'),
                     ])
                     ->withFinishReason(FinishReason::Stop)
                     ->withUsage(new Usage(30, 40))

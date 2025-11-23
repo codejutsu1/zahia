@@ -62,26 +62,27 @@ class ProcessIncomingMessageJob implements ShouldQueue
                 : new AssistantMessage($message->message);
         })->all();
 
-        // $responseText = Llm::prompt($prismMessages, $user);
+        $responseText = Llm::prompt($prismMessages, $user);
         // $responseText = Llm::vendorPrompt($prismMessages, $user);
 
-        // $conversation->messages()->create([
-        //     'user_id' => $message->user_id,
-        //     'message' => $responseText,
-        //     'status' => MessageStatus::Received,
-        //     'direction' => MessageDirection::INCOMING,
-        //     'channel' => MessageChannel::WHATSAPP,
-        //     'provider' => MessageProvider::TWILIO,
-        //     'participant' => MessageParticipant::ASSISTANT,
-        //     'timestamp' => now(),
-        //     'is_processed' => true,
-        // ]);
+        /** @phpstan-ignore-next-line */
+        $conversation->messages()->create([
+            'user_id' => $message->user_id,
+            'message' => $responseText,
+            'status' => MessageStatus::Received,
+            'direction' => MessageDirection::INCOMING,
+            'channel' => MessageChannel::WHATSAPP,
+            'provider' => MessageProvider::TWILIO,
+            'participant' => MessageParticipant::ASSISTANT,
+            'timestamp' => now(),
+            'is_processed' => true,
+        ]);
 
         $message->update([
             'is_processed' => true,
         ]);
 
-        Chatbot::sendMessage('Hello, how are you?');
+        Chatbot::sendMessage($responseText);
         // Log::info($responseText);
     }
 }
