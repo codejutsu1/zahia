@@ -83,8 +83,8 @@ jobs:
     - name: Run Code Formatting
       run: ./vendor/bin/pint
 
-    # - name: Run Code Static Analysis
-    #   run: ./vendor/bin/phpstan analyse --memory-limit=2G
+    - name: Run Code Static Analysis
+      run: ./vendor/bin/phpstan analyse --memory-limit=2G
       
     - name: Execute tests (Unit and Feature tests) via Pest
       env:
