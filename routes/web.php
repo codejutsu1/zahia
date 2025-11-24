@@ -1,6 +1,7 @@
 <?php
 
-use App\Mail\OrderDelivered;
+use App\Mail\OrderShipped;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,7 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/mail', function () {
-    return new OrderDelivered;
+    $order = Order::find(1);
+
+    return new OrderShipped($order);
 });
 
 require __DIR__.'/webhooks.php';

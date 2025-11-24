@@ -1,7 +1,7 @@
 <x-mail::message>
-Hi [Name],
+Hi <b>{{ $order->user->name }}</b> 👋,
 
-Your order (#12345) just arrived!
+Your order <b>#{{ $order->order_id }}</b> just arrived!
 
 Quick question: How'd everything turn out?
 

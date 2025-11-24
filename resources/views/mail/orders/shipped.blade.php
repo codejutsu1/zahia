@@ -1,9 +1,9 @@
 <x-mail::message>
-Hi [CUSTOMER_NAME],
+Hi <b>{{ $order->user->name }}</b> 👋,
 
 Your order is shipped and headed your way! 🎉
 
-Order: #[ORDER_NUMBER]
+Order: <b>#{{ $order->order_id }}</b>
 
 Carrier: [CARRIER_NAME]
 

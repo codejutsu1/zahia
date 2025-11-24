@@ -1,11 +1,13 @@
 <x-mail::message>
-Hi Name 👋,
+Hi <b>{{ $order->user->name }}</b> 👋,
 
-Thanks for your order! It's confirmed and we're packing it up now.
+Thanks for your order! 
 
-Order #12345
+It's confirmed and we're packing it up now.
 
-Total: $49.99
+OrderID: <b>#{{ $order->order_id }}</b>
+
+Total: <b>₦{{ number_format($order->total_amount, 2) }}</b>
 
 Shipping to:
 [Address]
