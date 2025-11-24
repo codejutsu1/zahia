@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionFlow;
 use App\Enums\TransactionStatus;
 use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,12 +18,14 @@ class Transaction extends Model
 
     protected $fillable = [
         'uuid',
+        'wallet_id',
         'order_id',
         'amount',
         'currency',
         'reference',
         'payment_method',
         'payment_status',
+        'flow',
         'payment_id',
         'payment_url',
         'status',
@@ -32,6 +35,7 @@ class Transaction extends Model
     {
         return [
             'status' => TransactionStatus::class,
+            'flow' => TransactionFlow::class,
         ];
     }
 
