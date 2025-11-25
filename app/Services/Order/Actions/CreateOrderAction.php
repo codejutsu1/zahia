@@ -4,8 +4,11 @@ namespace App\Services\Order\Actions;
 
 use App\Enums\CartStatus;
 use App\Enums\OrderItemStatus;
+use App\Enums\TransactionFlow;
 use App\Enums\TransactionPaymentProvider;
 use App\Enums\TransactionStatus;
+use App\Enums\WalletStatus;
+use App\Enums\WalletType;
 use App\Exceptions\OrderException;
 use App\Facade\Transaction as TransactionFacade;
 use App\Jobs\Order\NotifyVendor;
@@ -16,12 +19,15 @@ use App\Models\OrderItem;
 use App\Services\Order\Data\CreateOrderData;
 use App\Services\Transaction\Data\PaymentData;
 use App\Services\Transaction\Data\TransactionResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreateOrderAction
 {
     public function execute(CreateOrderData $data): Order
     {
+        Log::info('Reached here');
+
         $this->validateData($data);
 
         $cart = $this->checkForSelectedCartItems($data);
@@ -35,6 +41,8 @@ class CreateOrderAction
         $this->initializeTransaction($order);
 
         $this->notifyVendor($order);
+
+        Log::info('Order reached here successfully');
 
         return $order;
     }
@@ -108,7 +116,7 @@ class CreateOrderAction
                 'quantity' => $cartItem->quantity,
                 /* @phpstan-ignore-next-line */
                 'price' => $cartItem->product->price,
-                'status' => OrderItemStatus::ACTIVE,
+                'status' => OrderItemStatus::AVAILABLE,
             ];
         })->toArray();
 
@@ -156,24 +164,38 @@ class CreateOrderAction
             'bank_name' => $response->bank_name,
         ]);
 
-        $this->createTransaction($order, $response, $provider);
+        $this->createTransaction($order, $response, $provider, $reference);
     }
 
     protected function createTransaction(
         Order $order,
         TransactionResponse $response,
-        TransactionPaymentProvider $provider
+        TransactionPaymentProvider $provider,
+        string $reference
     ): void {
-        $order->transaction()->create([
+        /* @phpstan-ignore-next-line */
+        $wallet = $order->user->wallet()->firstOrCreate(
             /* @phpstan-ignore-next-line */
-            'wallet_id' => $order->user->wallet->id,
+            ['user_id' => $order->user->id],
+            [
+                'uuid' => Str::uuid(),
+                'balance' => 0,
+                'status' => WalletStatus::Active,
+                'type' => WalletType::User,
+            ]
+        );
+
+        $order->transaction()->create([
+            'wallet_id' => $wallet->id,
+            'order_id' => $order->id,
             'amount' => $response->amount,
             'currency' => 'NGN',
             'payment_provider' => $provider,
-            'reference' => $response->reference,
+            'reference' => $reference,
             'payment_method' => 'bank_transfer',
             'payment_status' => TransactionStatus::Pending,
             'status' => TransactionStatus::Pending,
+            'flow' => TransactionFlow::Debit,
         ]);
     }
 

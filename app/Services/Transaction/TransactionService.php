@@ -6,6 +6,7 @@ use App\Enums\TransactionStatus;
 use App\Exceptions\OrderException;
 use App\Exceptions\TransactionException;
 use App\Facade\Transaction as FacadeTransaction;
+use App\Jobs\Order\ProcessOrderJob;
 use App\Models\Order;
 use App\Models\Transaction;
 use App\Services\Transaction\Data\TransactionData;
@@ -40,8 +41,8 @@ class TransactionService
             ->verifyTransaction($transaction->reference);
 
         $newStatus = match ($data->status) {
-            TransactionStatus::Processed => TransactionStatus::Processed,
-            TransactionStatus::Failed => TransactionStatus::Failed,
+            TransactionStatus::Processed->value => TransactionStatus::Processed,
+            TransactionStatus::Failed->value => TransactionStatus::Failed,
             default => TransactionStatus::Pending,
         };
 
@@ -114,7 +115,7 @@ class TransactionService
                 amount: $data->amount,
             );
 
-            // ProcessOrderJob::dispatch($order)->afterCommit();
+            ProcessOrderJob::dispatch($order->id)->afterCommit();
         }
     }
 }

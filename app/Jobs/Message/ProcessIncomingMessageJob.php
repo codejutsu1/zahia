@@ -82,7 +82,7 @@ class ProcessIncomingMessageJob implements ShouldQueue
             'is_processed' => true,
         ]);
 
-        Chatbot::sendMessage($responseText);
-        // Log::info($responseText);
+        // Chatbot::sendMessage($responseText);
+        Log::info($responseText);
     }
 }

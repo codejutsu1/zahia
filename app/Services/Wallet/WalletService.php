@@ -3,8 +3,10 @@
 namespace App\Services\Wallet;
 
 use App\Enums\TransactionFlow;
+use App\Enums\TransactionStatus;
 use App\Exceptions\WalletException;
 use App\Models\Wallet;
+use Illuminate\Support\Str;
 
 class WalletService
 {
@@ -27,7 +29,7 @@ class WalletService
         $this->createTransactionRecord(
             wallet: $wallet,
             amount: $amount,
-            flow: TransactionFlow::Credit,
+            flow: TransactionFlow::Credit
         );
     }
 
@@ -46,7 +48,7 @@ class WalletService
         $this->createTransactionRecord(
             wallet: $wallet,
             amount: $amount,
-            flow: TransactionFlow::Debit,
+            flow: TransactionFlow::Debit
         );
     }
 
@@ -58,6 +60,8 @@ class WalletService
         $wallet->transactions()->create([
             'amount' => $amount,
             'flow' => $flow,
+            'reference' => Str::uuid(),
+            'status' => TransactionStatus::Processed,
         ]);
     }
 }

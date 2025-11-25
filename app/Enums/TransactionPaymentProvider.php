@@ -7,4 +7,6 @@ enum TransactionPaymentProvider: string
     case Flutterwave = 'flutterwave';
 
     case Paystack = 'paystack';
+
+    case Internal = 'internal';
 }

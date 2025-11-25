@@ -10,7 +10,7 @@ class TransactionManager extends Manager
 {
     public function getDefaultDriver(): string
     {
-        return config('services.payment_default');
+        return config('services.payment_default', 'flutterwave');
     }
 
     public function createFlutterwaveDriver(): InteractWithTransaction

@@ -37,7 +37,6 @@ class FlutterwaveDriver implements InteractWithTransaction
         $response = $this->connector->send($request);
 
         if ($response->failed()) {
-            Log::info(json_encode($response->json()));
 
             throw new PaymentException(
                 message: 'Failed to initiate transaction.',
@@ -47,6 +46,8 @@ class FlutterwaveDriver implements InteractWithTransaction
         }
 
         $responseData = $response->json();
+
+        Log::info(json_encode($responseData));
 
         return TransactionResponse::from([
             'account_number' => data_get($responseData, 'meta.authorization.transfer_account'),

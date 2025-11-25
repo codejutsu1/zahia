@@ -24,7 +24,7 @@ class OrderItemFactory extends Factory
             'product_id' => Product::factory(),
             'quantity' => 2,
             'price' => 1500.00,
-            'status' => OrderItemStatus::ACTIVE,
+            'status' => OrderItemStatus::AVAILABLE,
         ];
     }
 }

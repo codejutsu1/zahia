@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum OrderItemStatus: string
 {
-    case ACTIVE = 'active';
-    case INACTIVE = 'inactive';
-    case CANCELLED = 'cancelled';
+    case AVAILABLE = 'available';
+    case UNAVAILABLE = 'unavailable';
+    case OUT_OF_STOCK = 'out_of_stock';
 }

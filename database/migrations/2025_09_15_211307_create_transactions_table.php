@@ -17,17 +17,17 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
 
-            $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(Order::class)->nullable();
             $table->foreignIdFor(Wallet::class);
 
             $table->string('amount');
-            $table->string('currency');
+            $table->string('currency')->default('NGN');
             $table->string('reference');
-            $table->string('payment_method');
-            $table->string('payment_status');
+            $table->string('payment_method')->nullable();
+            $table->string('payment_status')->nullable();
             $table->string('payment_id')->nullable();
             $table->string('payment_url')->nullable();
-            $table->string('payment_provider');
+            $table->string('payment_provider')->default('internal');
             $table->string('flow');
             $table->string('status');
 

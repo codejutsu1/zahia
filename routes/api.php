@@ -5,6 +5,7 @@ use App\Enums\MessageDirection;
 use App\Enums\MessageParticipant;
 use App\Enums\MessageProvider;
 use App\Enums\MessageStatus;
+use App\Http\Controllers\Api\Transaction\VerifyTransactionController;
 use App\Jobs\Message\ProcessIncomingAudioJob;
 use App\Jobs\Message\ProcessIncomingMessageJob;
 use App\Models\Conversation;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/transaction/verify', VerifyTransactionController::class);
 
 Route::post('/ai', function (Request $request) {
     $request->validate([
@@ -53,7 +56,6 @@ Route::post('/ai', function (Request $request) {
         'timestamp' => now(),
     ]);
 
-    // dd($user->name);
     ProcessIncomingMessageJob::dispatch($message->id);
 
     return response()->json('sent', 200);

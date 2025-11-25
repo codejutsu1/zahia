@@ -33,6 +33,7 @@ class Transaction extends Model
         'payload',
         'completed_at',
         'failed_at',
+        'payment_provider',
     ];
 
     protected function casts(): array

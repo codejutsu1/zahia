@@ -38,7 +38,7 @@ class VerifyTransactionRequest extends Request
             status: $this->computeStatus(data_get($data, 'status')),
             payment_type: data_get($data, 'payment_type'),
             meta: [
-                'order_uid' => data_get($data, 'meta.order_uid'),
+                'order_uuid' => data_get($data, 'meta.order_uuid'),
             ],
             authorization: data_get($data, 'authorization'),
             customer: data_get($data, 'customer'),
@@ -48,6 +48,7 @@ class VerifyTransactionRequest extends Request
     protected function computeStatus(string $status): string
     {
         $status = match ($status) {
+            'processed' => TransactionStatus::Processed,
             'successful' => TransactionStatus::Processed,
             'failed' => TransactionStatus::Failed,
             'pending' => TransactionStatus::Pending,
