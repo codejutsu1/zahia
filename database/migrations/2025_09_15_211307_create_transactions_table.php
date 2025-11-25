@@ -27,8 +27,14 @@ return new class extends Migration
             $table->string('payment_status');
             $table->string('payment_id')->nullable();
             $table->string('payment_url')->nullable();
+            $table->string('payment_provider');
             $table->string('flow');
             $table->string('status');
+
+            $table->json('payload')->nullable();
+
+            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('failed_at')->nullable();
 
             $table->timestamps();
         });

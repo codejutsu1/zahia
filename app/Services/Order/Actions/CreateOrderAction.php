@@ -143,7 +143,7 @@ class CreateOrderAction
             'payment_method' => 'bank_transfer',
             'meta' => [
                 /* @phpstan-ignore-next-line */
-                'order_uid' => $order->uuid->toString(),
+                'order_uuid' => $order->uuid->toString(),
             ],
         ]);
 
@@ -156,14 +156,20 @@ class CreateOrderAction
             'bank_name' => $response->bank_name,
         ]);
 
-        $this->createTransaction($order, $response);
+        $this->createTransaction($order, $response, $provider);
     }
 
-    protected function createTransaction(Order $order, TransactionResponse $response): void
-    {
+    protected function createTransaction(
+        Order $order,
+        TransactionResponse $response,
+        TransactionPaymentProvider $provider
+    ): void {
         $order->transaction()->create([
+            /* @phpstan-ignore-next-line */
+            'wallet_id' => $order->user->wallet->id,
             'amount' => $response->amount,
             'currency' => 'NGN',
+            'payment_provider' => $provider,
             'reference' => $response->reference,
             'payment_method' => 'bank_transfer',
             'payment_status' => TransactionStatus::Pending,

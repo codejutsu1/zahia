@@ -8,4 +8,9 @@ class OrderException extends CustomException
     {
         return new self('Please provide a valid email address to initialize a transaction, its a one time process');
     }
+
+    public static function notFound(): self
+    {
+        return new self('Order not found!');
+    }
 }

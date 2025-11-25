@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TransactionFlow;
+use App\Enums\TransactionPaymentProvider;
 use App\Enums\TransactionStatus;
 use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,9 @@ class Transaction extends Model
         'payment_id',
         'payment_url',
         'status',
+        'payload',
+        'completed_at',
+        'failed_at',
     ];
 
     protected function casts(): array
@@ -36,11 +40,35 @@ class Transaction extends Model
         return [
             'status' => TransactionStatus::class,
             'flow' => TransactionFlow::class,
+            'payment_provider' => TransactionPaymentProvider::class,
+            'payload' => 'array',
         ];
     }
 
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function finalStatus(): bool
+    {
+        /* @phpstan-ignore-next-line */
+        return in_array(
+            $this->status,
+            [TransactionStatus::Processed, TransactionStatus::Failed],
+            true
+        );
+    }
+
+    public function isProcessed(): bool
+    {
+        /* @phpstan-ignore-next-line */
+        return $this->status == TransactionStatus::Processed;
+    }
+
+    public function isFailed(): bool
+    {
+        /* @phpstan-ignore-next-line */
+        return $this->status == TransactionStatus::Failed;
     }
 }
