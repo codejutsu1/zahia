@@ -26,8 +26,6 @@ class CreateOrderAction
 {
     public function execute(CreateOrderData $data): Order
     {
-        Log::info('Reached here');
-
         $this->validateData($data);
 
         $cart = $this->checkForSelectedCartItems($data);

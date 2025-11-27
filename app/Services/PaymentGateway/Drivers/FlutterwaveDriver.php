@@ -11,7 +11,6 @@ use App\Http\Integrations\Flutterwave\Requests\VerifyTransactionRequest;
 use App\Services\Transaction\Data\PaymentData;
 use App\Services\Transaction\Data\TransactionData;
 use App\Services\Transaction\Data\TransactionResponse;
-use Illuminate\Support\Facades\Log;
 
 class FlutterwaveDriver implements InteractWithTransaction
 {
@@ -46,8 +45,6 @@ class FlutterwaveDriver implements InteractWithTransaction
         }
 
         $responseData = $response->json();
-
-        Log::info(json_encode($responseData));
 
         return TransactionResponse::from([
             'account_number' => data_get($responseData, 'meta.authorization.transfer_account'),
