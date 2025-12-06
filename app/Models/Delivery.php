@@ -18,6 +18,7 @@ class Delivery extends Model
     protected $fillable = [
         'uuid',
         'order_id',
+        'delivery_address_id',
         'address',
         'status',
     ];
