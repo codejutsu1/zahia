@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\DeliveryAddress;
 use App\Models\Order;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->uuid('uuid');
 
             $table->foreignIdFor(Order::class);
+            $table->foreignIdFor(DeliveryAddress::class);
 
             $table->string('address')->nullable();
             $table->string('status');
