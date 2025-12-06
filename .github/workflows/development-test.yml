@@ -1,10 +1,11 @@
-name: Backend & Frontend Test
+name: Backend & Frontend Test Fot Development Branch
 
 on:
   push:
-    branches: [ "production", "main" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "production", "main" ]
+    branches: [ "development" ]
+
 jobs:
   laravel-tests:
 
@@ -77,24 +78,3 @@ jobs:
         DB_PORT: 33306
         DB_USER: root
       run: vendor/bin/pest --parallel
-
-    - name: Synchronize Files To Server
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        SOURCE: "."
-        REMOTE_HOST: ${{ secrets.VPS_HOST }}
-        REMOTE_USER: ${{ secrets.VPS_USER }}
-        TARGET: "/var/www/html/zahia"
-        EXCLUDE: ".env"
-
-    - name: Run Remote/Artisan Commands
-      uses: appleboy/ssh-action@v1
-      with:
-        host: ${{ secrets.VPS_HOST }}
-        username: ${{ secrets.VPS_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          cd /var/www/html/zahia
-          php artisan migrate --force
-          php artisan optimize
