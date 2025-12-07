@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\DeliveryAddressLocation;
+use App\Enums\DeliveryAddressStatus;
 use App\Traits\HasUuidColumn;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +21,8 @@ class DeliveryAddress extends Model
         'room_number',
         'floor_number',
         'building_number',
+        'building_name',
+        'location',
         'street_name',
         'city',
         'state',
@@ -32,6 +36,14 @@ class DeliveryAddress extends Model
         'is_estate',
         'is_main',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => DeliveryAddressStatus::class,
+            'location' => DeliveryAddressLocation::class,
+        ];
+    }
 
     public function user(): BelongsTo
     {

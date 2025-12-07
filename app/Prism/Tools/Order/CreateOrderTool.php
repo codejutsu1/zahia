@@ -71,6 +71,20 @@ class CreateOrderTool
                         return 'You don\'t have an email address, please provide a valid email address and call the update email tool.';
                     }
 
+                    if ($user->deliveryAddresses->isEmpty()) {
+                        return 'You don\'t have a delivery address, please provide a delivery address and call the create delivery address tool.';
+                    }
+
+                    // $deliveryAddress = $user->deliveryAddresses->main()->first();
+
+                    // if(is_null($deliveryAddress)) {
+                    //     return 'You don\'t have a main delivery address, please provide a main delivery address and call the update active delivery address tool.';
+                    // }
+
+                    // if(! is_null($deliveryAddress)) {
+                    //     return "Confirm you want to use the address, if no, please call the list delivery addresses tool and select the delivery address you want to use.";
+                    // }
+
                     $order = DB::transaction(function () use ($cart, $user) {
                         $createOrderData = CreateOrderData::from([
                             'user' => $user,
