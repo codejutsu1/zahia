@@ -18,6 +18,7 @@
         "opcodesio/log-viewer": "3.21.1",
         "predis/predis": "^3.3",
         "prism-php/prism": "^0.89.0",
+        "resend/resend-php": "^1.1",
         "saloonphp/laravel-plugin": "^3.6",
         "saloonphp/saloon": "^3.14",
         "spatie/laravel-data": "^4.17",
