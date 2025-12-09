@@ -41,7 +41,7 @@ class ListDeliveryAddressTool
                         $message .= "Room Number: {$deliveryAddress->room_number}\n";
                         $message .= "Floor Number: {$deliveryAddress->floor_number}\n";
                         $message .= "Location: {$locationValue}\n";
-                        $message .= "Is Main: {$mainDeliveryAddress}\n";
+                        $message .= "Default: {$mainDeliveryAddress}\n";
                         $message .= "\n";
                     }
 
