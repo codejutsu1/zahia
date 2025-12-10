@@ -45,6 +45,7 @@ class GeminiDriver implements InteractWithLlm
                 CreateDeliveryAddressTool::make($user),
                 ListDeliveryAddressTool::make($user),
             ])
+            ->withSystemPrompt('Please respond in English.')
             ->withMaxSteps(2)
             ->withMessages($prismMessages)
             ->asText()->text;

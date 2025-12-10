@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->foreignIdFor(User::class);
 
+            $table->string('unique_id')->unique();
             $table->string('room_number')->nullable();
             $table->string('floor_number')->nullable();
             $table->string('building_number')->nullable();

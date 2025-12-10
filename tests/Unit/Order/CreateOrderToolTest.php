@@ -5,6 +5,7 @@ use App\Enums\OrderStatus;
 use App\Enums\ProductStatus;
 use App\Models\Cart;
 use App\Models\CartItem;
+use App\Models\DeliveryAddress;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -15,6 +16,11 @@ use App\Services\Order\OrderService;
 beforeEach(function () {
     $this->user = User::factory()->create([
         'email' => 'customer@example.com',
+    ]);
+
+    $this->deliveryAddress = DeliveryAddress::factory()->create([
+        'user_id' => $this->user->id,
+        'is_main' => true,
     ]);
 
     $this->vendor = Vendor::factory()->create([

@@ -37,6 +37,7 @@ class ListDeliveryAddressTool
                         /** @phpstan-ignore-next-line */
                         $locationValue = $deliveryAddress->location->value;
 
+                        $message .= "Unique ID: {$deliveryAddress->unique_id}\n";
                         $message .= "Building Name: {$deliveryAddress->building_name}\n";
                         $message .= "Room Number: {$deliveryAddress->room_number}\n";
                         $message .= "Floor Number: {$deliveryAddress->floor_number}\n";
