@@ -6,6 +6,8 @@ use App\Contracts\InteractWithLlm;
 use App\Models\User;
 use App\Prism\Tools\Cart\CreateCartTool;
 use App\Prism\Tools\Cart\ListCartTool;
+use App\Prism\Tools\DeliveryAddress\CreateDeliveryAddressTool;
+use App\Prism\Tools\DeliveryAddress\ListDeliveryAddressTool;
 use App\Prism\Tools\Order\CheckoutOrderTool;
 use App\Prism\Tools\Order\CreateOrderTool;
 use App\Prism\Tools\Order\ListOrdersTool;
@@ -40,7 +42,10 @@ class GeminiDriver implements InteractWithLlm
                 CreateOrderTool::make($user),
                 RepeatOrderTool::make($user),
                 UpdateEmailTool::make($user),
+                CreateDeliveryAddressTool::make($user),
+                ListDeliveryAddressTool::make($user),
             ])
+            ->withSystemPrompt('Please respond in English.')
             ->withMaxSteps(2)
             ->withMessages($prismMessages)
             ->asText()->text;

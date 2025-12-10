@@ -10,16 +10,17 @@ trait HasOrderIdColumn
 
     public static function bootHasOrderIdColumn()
     {
-        static::creating(function (self $model) {
-            if ($model->hasOrderIdColumn) {
-                $model->attributes[$model->orderIdColumnName] = self::generateOrderId($model);
+        static::created(function (self $model) {
+            if ($model->hasOrderIdColumn && empty($model->{$model->orderIdColumnName})) {
+                $orderId = self::generateOrderId($model);
+                $model->update([$model->orderIdColumnName => $orderId]);
             }
         });
     }
 
     protected static function generateOrderId(self $order): string
     {
-        $uuidPrefix = substr($order->uuid, 0, 2);
+        $uuidPrefix = substr($order->attributes['uuid'] ?? $order->uuid, 0, 2);
 
         $randomDigit = random_int(0, 9);
 

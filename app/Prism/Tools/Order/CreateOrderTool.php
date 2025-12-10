@@ -21,7 +21,11 @@ class CreateOrderTool
     {
         return (new Tool)
             ->as('create_order')
-            ->for('Creating an order, this tool creates an order, after the user confirms he or she wants to create an order, call the create order tool with the vendor name. If the user gets an error saying invalid email, ask the user to provide a valid email address and call the update email tool.')
+            ->for('Creating an order, this tool creates an order, 
+                - after the user confirms he or she wants to create an order, call the create order tool with the vendor name. 
+                -If the user gets an error saying invalid email, ask the user to provide a valid email address and then call the update email tool.
+                - If the user doesn\'t have a delivery address, ask the user to provide a delivery address and then call the create delivery address tool.'
+            )
             ->withObjectParameter(
                 'cart',
                 'The cart parameters',
@@ -68,8 +72,22 @@ class CreateOrderTool
 
                     /** @phpstan-ignore-next-line */
                     if (is_null($cart->user->email)) {
-                        return 'You don\'t have an email address, please provide a valid email address and call the update email tool.';
+                        return 'You don\'t have an email address';
                     }
+
+                    if ($user->deliveryAddresses->isEmpty()) {
+                        return 'You don\'t have a delivery address';
+                    }
+
+                    // $deliveryAddress = $user->deliveryAddresses->main()->first();
+
+                    // if(is_null($deliveryAddress)) {
+                    //     return 'You don\'t have a main delivery address, please provide a main delivery address and call the update active delivery address tool.';
+                    // }
+
+                    // if(! is_null($deliveryAddress)) {
+                    //     return "Confirm you want to use the address, if no, please call the list delivery addresses tool and select the delivery address you want to use.";
+                    // }
 
                     $order = DB::transaction(function () use ($cart, $user) {
                         $createOrderData = CreateOrderData::from([

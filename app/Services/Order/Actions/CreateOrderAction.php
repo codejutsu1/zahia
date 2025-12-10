@@ -3,6 +3,7 @@
 namespace App\Services\Order\Actions;
 
 use App\Enums\CartStatus;
+use App\Enums\DeliveryStatus;
 use App\Enums\OrderItemStatus;
 use App\Enums\TransactionFlow;
 use App\Enums\TransactionPaymentProvider;
@@ -19,7 +20,6 @@ use App\Models\OrderItem;
 use App\Services\Order\Data\CreateOrderData;
 use App\Services\Transaction\Data\PaymentData;
 use App\Services\Transaction\Data\TransactionResponse;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreateOrderAction
@@ -38,9 +38,9 @@ class CreateOrderAction
 
         $this->initializeTransaction($order);
 
-        $this->notifyVendor($order);
+        $this->createDelivery($order, $data);
 
-        Log::info('Order reached here successfully');
+        $this->notifyVendor($order);
 
         return $order;
     }
@@ -200,5 +200,19 @@ class CreateOrderAction
     protected function notifyVendor(Order $order): void
     {
         NotifyVendor::dispatch($order->id);
+    }
+
+    protected function createDelivery(Order $order, CreateOrderData $data): void
+    {
+        $deliveryAddress = $data->deliveryAddress
+            /* @phpstan-ignore-next-line */
+            ?? $order->user->deliveryAddresses()->where('is_main', true)->first()
+            ?? throw new \Exception('No delivery address found');
+
+        $order->delivery()->create([
+            'delivery_address_id' => $deliveryAddress->id,
+            'address' => $deliveryAddress->fullAddress(),
+            'status' => DeliveryStatus::Active,
+        ]);
     }
 }
